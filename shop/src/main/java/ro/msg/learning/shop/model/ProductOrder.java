@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name="product_order")
 @NoArgsConstructor
 @Data
 @Builder
@@ -20,22 +21,20 @@ public class ProductOrder {
     private Long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "customer")
+    @JoinColumn(name = "customer_id")
     private Customer customer;
 
     private LocalDateTime createdAt;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name="shippedFrom")
+    @ManyToOne
+    @JoinColumn(name="shippedFrom_id")
     private Location location;
 
-
-
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order")
     private List<ProductOrderDetail> orderDetails;
 
-    private String country;
-    private String city;
-    private String county;
-    private String address;
+    private String address_country;
+    private String address_city;
+    private String address_county;
+    private String address_street_address;
 }

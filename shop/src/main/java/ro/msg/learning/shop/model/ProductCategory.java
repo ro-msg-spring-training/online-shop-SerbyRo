@@ -9,11 +9,12 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table
+
 @NoArgsConstructor
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="product_category")
 public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class ProductCategory {
 
     private String description;
 
-    @OneToMany(mappedBy = "productCategory", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productCategory")
     private List<Product> products;
 
 }

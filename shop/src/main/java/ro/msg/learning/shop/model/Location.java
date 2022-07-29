@@ -13,23 +13,24 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="location")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-    private String country;
-    private String city;
-    private String county;
-    private String address;
+    private String address_country;
+    private String address_city;
+    private String address_county;
+    private String address_streetAddress;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "location")
     private List<ProductOrder> orders;
-    @OneToOne(mappedBy = "location", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "location")
     private Revenue revenues;
 
-    @OneToMany(mappedBy = "location", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "location")
     private List<Stock> stocks;
 }
 

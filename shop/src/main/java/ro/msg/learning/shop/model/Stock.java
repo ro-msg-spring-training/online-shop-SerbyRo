@@ -14,19 +14,23 @@ import javax.persistence.*;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="stock")
 public class Stock {
     @Id
+
     private Long productId;
 
     @Id
     private Long locationId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location")
+    @ManyToOne
+    @MapsId("locationId")
+    //@JoinColumn(name = "location_id", insertable=false, updatable=false)
     private Location location;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "product")
+    @ManyToOne
+    @MapsId("productId")
+    //@JoinColumn(name = "product_id", insertable=false, updatable=false)
     private Product product;
 
     private Integer quantity;

@@ -10,6 +10,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="customer")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +22,7 @@ public class Customer {
     private String password;
     private String email;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer")
     private List<ProductOrder> orders;
 
 }

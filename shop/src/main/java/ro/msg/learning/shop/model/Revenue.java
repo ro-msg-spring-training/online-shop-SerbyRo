@@ -14,16 +14,17 @@ import java.time.LocalDate;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="revenue")
 public class Revenue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne()
-    @JoinColumn(name = "location")
+    @JoinColumn(name = "location_id")
     private Location location;
 
-    private LocalDate date;
+    private LocalDate dateRevenue;
 
     private BigDecimal sum;
 

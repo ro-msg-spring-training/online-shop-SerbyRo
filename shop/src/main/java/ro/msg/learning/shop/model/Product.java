@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,9 +38,19 @@ public class Product {
     @ManyToOne()
     private Supplier supplier;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private List<Stock> stocks;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private  List<ProductOrderDetail>  orderDetails;
+
+    public Product(String name, String description, BigDecimal price, Double weight, String imageUrl, ProductCategory productCategory, Supplier supplier) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.weight = weight;
+        this.imageUrl = imageUrl;
+        this.productCategory = productCategory;
+        this.supplier = supplier;
+    }
 }

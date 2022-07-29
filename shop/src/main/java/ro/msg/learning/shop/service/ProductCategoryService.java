@@ -2,6 +2,7 @@ package ro.msg.learning.shop.service;
 
 
 import org.springframework.stereotype.Service;
+import ro.msg.learning.shop.model.Location;
 import ro.msg.learning.shop.model.ProductCategory;
 import ro.msg.learning.shop.repository.IProductCategoryInterfaceRepository;
 
@@ -24,5 +25,28 @@ public class ProductCategoryService {
     public List<ProductCategory> getAllProductCategories()
     {
         return productCategoryInterfaceRepository.findAll();
+    }
+
+    public ProductCategory findOneProductCategoryById(Long productCategoryId) throws ShopException {
+        return productCategoryInterfaceRepository.findById(productCategoryId).orElseThrow(()-> new ShopException("Categoria produsului cu id-ul "+ productCategoryId + " nu exista!"));
+    }
+
+    public void deleteProductCategoryById(Long productCategoryId)
+    {
+        if (productCategoryInterfaceRepository.existsById(productCategoryId))
+        {
+            productCategoryInterfaceRepository.deleteById(productCategoryId);
+        }
+    }
+
+    public ProductCategory updateProductCategory(ProductCategory productCategory) throws ShopException {
+        if (productCategoryInterfaceRepository.findProductCategoryByName(productCategory.getName()).isPresent() &&
+                !productCategoryInterfaceRepository.findProductCategoryByName(productCategory.getName()).get().getId().equals(productCategory.getId())){
+            throw new ShopException("Exista o locatie cu acelasi nume!");
+        }
+        else
+        {
+            return productCategoryInterfaceRepository.save(productCategory);
+        }
     }
 }

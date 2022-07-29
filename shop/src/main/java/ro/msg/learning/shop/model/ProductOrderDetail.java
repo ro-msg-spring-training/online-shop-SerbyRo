@@ -14,19 +14,22 @@ import javax.persistence.*;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="product_order_detail")
 public class ProductOrderDetail {
     @Id
+    @Column(name = "product_order_id")
     private Long orderId;
-
     @Id
     private Long productId;
 
-    @ManyToOne()
-    @JoinColumn(name ="product_order" )
+    @ManyToOne
+    @MapsId("orderId")
+    @JoinColumn(name ="product_order_id")
     private ProductOrder order;
 
-    @ManyToOne()
-    @JoinColumn(name = "product")
+    @ManyToOne
+    @MapsId("productId")
+    //@JoinColumn(name = "product_id")
     private Product product;
 
     private Integer quantity;

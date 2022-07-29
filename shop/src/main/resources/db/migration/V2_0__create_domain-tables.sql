@@ -32,10 +32,10 @@ create table if not exists product(
 create table if not exists location(
   id int primary key auto_increment,
   name varchar(50) not null ,
-  addressCountry varchar(50) not null ,
-  addressCity varchar(50) not null ,
-  addressCounty varchar(50) not null ,
-  addressStreetAddress varchar(50) not null
+  address_country varchar(50) not null ,
+  address_city varchar(50) not null ,
+  address_county varchar(50) not null ,
+  address_streetAddress varchar(50) not null
 );
 
 create table if not exists stock(
@@ -49,11 +49,11 @@ create table if not exists product_order(
   id int primary key auto_increment,
   shippedFrom_id int not null references location(id),
   customer_id int not null references customer(id),
-  createdAt date not null ,
-  addressCountry varchar(50) not null ,
-  addressCity varchar(50) not null ,
-  addressCounty varchar(50) not null ,
-  addressStreetAddress varchar(50) not null
+  created_at date not null ,
+  address_country varchar(50) not null ,
+  address_city varchar(50) not null ,
+  address_county varchar(50) not null ,
+  address_street_address varchar(50) not null
 );
 
 create table if not exists product_order_detail(

@@ -14,6 +14,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
+@Table(name="supplier")
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +22,6 @@ public class Supplier {
 
     private String name;
 
-    @OneToMany(mappedBy = "supplier",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "supplier")
     private List<Product> products;
 }

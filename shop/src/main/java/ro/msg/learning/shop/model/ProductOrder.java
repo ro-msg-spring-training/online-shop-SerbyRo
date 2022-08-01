@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="product_order")
@@ -31,7 +32,7 @@ public class ProductOrder {
     private Location location;
 
     @OneToMany(mappedBy = "order")
-    private List<ProductOrderDetail> orderDetails;
+    private Set<ProductOrderDetail> orderDetails;
 
     private String address_country;
     private String address_city;

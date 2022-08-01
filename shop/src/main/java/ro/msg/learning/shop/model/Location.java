@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -31,7 +32,7 @@ public class Location {
     private Revenue revenues;
 
     @OneToMany(mappedBy = "location")
-    private List<Stock> stocks;
+    private Set<Stock> stocks;
 }
 
 

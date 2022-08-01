@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -39,10 +40,10 @@ public class Product {
     private Supplier supplier;
 
     @OneToMany(mappedBy = "product")
-    private List<Stock> stocks;
+    private Set<Stock> stocks;
 
     @OneToMany(mappedBy = "product")
-    private  List<ProductOrderDetail>  orderDetails;
+    private  Set<ProductOrderDetail>  orderDetails;
 
     public Product(String name, String description, BigDecimal price, Double weight, String imageUrl, ProductCategory productCategory, Supplier supplier) {
         this.name = name;

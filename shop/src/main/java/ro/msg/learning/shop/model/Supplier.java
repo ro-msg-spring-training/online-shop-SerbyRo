@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +24,5 @@ public class Supplier {
     private String name;
 
     @OneToMany(mappedBy = "supplier")
-    private List<Product> products;
+    private Set<Product> products;
 }

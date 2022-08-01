@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -14,7 +15,7 @@ import java.util.List;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long customerId;
+    private Long id;
 
     private String firstName;
     private String lastName;
@@ -23,6 +24,6 @@ public class Customer {
     private String email;
 
     @OneToMany(mappedBy = "customer")
-    private List<ProductOrder> orders;
+    private Set<ProductOrder> orders;
 
 }

@@ -34,4 +34,10 @@ public class Stock {
     private Product product;
 
     private Integer quantity;
+
+    public Stock(Location location, Product product, Integer quantity) {
+        this.location = location;
+        this.product=product;
+        this.quantity=quantity;
+    }
 }

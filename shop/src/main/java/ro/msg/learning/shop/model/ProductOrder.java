@@ -1,11 +1,13 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -25,14 +27,15 @@ public class ProductOrder {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    private LocalDateTime createdAt;
+    @JsonFormat(pattern = "yyyy-MM-dd", shape = JsonFormat.Shape.STRING)
+    private LocalDate createdAt;
 
     @ManyToOne
     @JoinColumn(name="shippedFrom_id")
     private Location location;
 
     @OneToMany(mappedBy = "order")
-    private Set<ProductOrderDetail> orderDetails;
+    private List<ProductOrderDetail> orderDetails;
 
     private String address_country;
     private String address_city;

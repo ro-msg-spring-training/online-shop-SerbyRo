@@ -1,48 +1,73 @@
 package ro.msg.learning.shop.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ro.msg.learning.shop.dto.CustomerDto;
+import ro.msg.learning.shop.dto.LocationDto;
+import ro.msg.learning.shop.model.Customer;
 import ro.msg.learning.shop.model.Location;
 import ro.msg.learning.shop.repository.ILocationInterfaceRepository;
+import ro.msg.learning.shop.service.exceptions.ProductException;
+import ro.msg.learning.shop.utils.Mapper;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
+    @Autowired
     private ILocationInterfaceRepository locationInterfaceRepository;
+
+    private Mapper mapper = new Mapper();
 
     public LocationService(ILocationInterfaceRepository locationInterfaceRepository)
     {
         this.locationInterfaceRepository = locationInterfaceRepository;
     }
 
-    public void addLocation(Location location)
+    public LocationDto addLocation(LocationDto locationDto)
     {
-        locationInterfaceRepository.save(location);
-    }
-    public Collection<Location> getAllLocations(){
-        return locationInterfaceRepository.findAll();
+        Location location = mapper.toLocation(locationDto);
+        return mapper.toLocationDto(locationInterfaceRepository.save(location));
     }
 
-    public Location findOneLocationById(Long locationId) throws ShopException {
-        return locationInterfaceRepository.findById(locationId).orElseThrow(()-> new ShopException("Locatia cu id-ul "+ locationId + " nu exista!"));
-    }
-
-    public void deleteLocationById(Long locationId)
-    {
-        if (locationInterfaceRepository.existsById(locationId))
+    public LocationDto findLocationById(Long locationId) throws ProductException {
+        Optional<LocationDto> locationDto = locationInterfaceRepository.findById(locationId).map(mapper::toLocationDto);
+        if (locationDto.isPresent())
         {
-            locationInterfaceRepository.deleteById(locationId);
-        }
-    }
-
-    public Location updateLocation(Location location) throws ShopException {
-        if (locationInterfaceRepository.findLocationByName(location.getName()).isPresent() &&
-                !locationInterfaceRepository.findLocationByName(location.getName()).get().getId().equals(location.getId())){
-            throw new ShopException("Exista o locatie cu acelasi nume!");
+            return locationDto.get();
         }
         else
         {
-            return locationInterfaceRepository.save(location);
+            throw new ProductException("The location doesn't exist!");
         }
     }
+    public List<LocationDto> getAllLocations(){
+        return locationInterfaceRepository.findAll()
+                .stream()
+                .map(mapper::toLocationDto)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteLocationById(Long locationId) throws ProductException {
+        if (locationInterfaceRepository.existsById(locationId)){
+            locationInterfaceRepository.deleteById(locationId);
+        }
+        else
+        {
+            throw new ProductException("The Location doean't exist!");
+        }
+    }
+
+    public void updateLocation(Long locationId,LocationDto locationDto) throws ProductException{
+        locationInterfaceRepository.findById(locationId)
+                .orElseThrow(() ->new ProductException("Invalid locationId"));
+
+        Location location = mapper.toLocation(locationDto);
+        location.setId(locationId);
+        locationInterfaceRepository.save(location);
+    }
+
 }

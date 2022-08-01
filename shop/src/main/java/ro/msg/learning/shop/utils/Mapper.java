@@ -1,14 +1,14 @@
 package ro.msg.learning.shop.utils;
 
 import org.springframework.stereotype.Component;
-import ro.msg.learning.shop.dto.CustomerDto;
-import ro.msg.learning.shop.dto.ProductCategoryDto;
-import ro.msg.learning.shop.dto.ProductCombinedDto;
-import ro.msg.learning.shop.dto.SupplierDto;
-import ro.msg.learning.shop.model.Customer;
-import ro.msg.learning.shop.model.Product;
-import ro.msg.learning.shop.model.ProductCategory;
-import ro.msg.learning.shop.model.Supplier;
+import ro.msg.learning.shop.dto.*;
+import ro.msg.learning.shop.model.*;
+
+import javax.persistence.criteria.Order;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class Mapper {
@@ -64,6 +64,117 @@ public class Mapper {
                 .email(customerDto.getEmail()).build();
         newCustomer.setId(customerDto.getCustomerId());
         return newCustomer;
+    }
+
+    public StockDto toStockDto(Stock stock)
+    {
+        return StockDto.builder()
+                .locationName(stock.getLocation().getName())
+                .productName(stock.getProduct().getName())
+                .quantity(stock.getQuantity())
+                .build();
+    }
+
+    public List<StockDto> toStocksList(List<Stock> stocksList)
+    {
+        List<StockDto> stockDtos = new ArrayList<>();
+        for (Stock createdStocks: stocksList)
+        {
+            stockDtos.add(toStockDto(createdStocks));
+        }
+        return stockDtos;
+    }
+
+    public LocationDto toLocationDto(Location location)
+    {
+        return LocationDto.builder()
+                .name(location.getName())
+                .addressCountry(location.getAddress_country())
+                .addressCounty(location.getAddress_county())
+                .addressCity(location.getAddress_city())
+                .addressStreet(location.getAddress_streetAddress()).build();
+    }
+
+
+
+    public Location toLocation(LocationDto locationDto)
+    {
+        Location newLocation = Location.builder()
+                .name(locationDto.getName())
+                .address_country(locationDto.getAddressCountry())
+                .address_county(locationDto.getAddressCounty())
+                .address_city(locationDto.getAddressCity())
+                .address_streetAddress(locationDto.getAddressStreet()).build();
+        newLocation.setId(locationDto.getLocationId());
+        return newLocation;
+    }
+
+    public OrderDetailDto toOrderDetailDto(ProductOrderDetail productOrderDetail)
+    {
+        OrderDetailDto orderDetailDto = new OrderDetailDto();
+        orderDetailDto.setProductId(productOrderDetail.getProduct().getId());
+        orderDetailDto.setQuantity(orderDetailDto.getQuantity());
+        return orderDetailDto;
+    }
+
+    public ProductOrderDetail toproductOrderDetail(OrderDetailDto orderDetailDto)
+    {
+        Product product = new Product();
+        product.setId(orderDetailDto.getProductId());
+
+        ProductOrderDetail productOrderDetail = new ProductOrderDetail();
+        productOrderDetail.setProduct(product);
+        productOrderDetail.setQuantity(orderDetailDto.getQuantity());
+        return productOrderDetail;
+    }
+
+    public List<OrderDetailDto> toListOrderDetailDto(List<ProductOrderDetail> orderDetailList)
+    {
+        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+        for (ProductOrderDetail productOrderDetail:orderDetailList)
+        {
+            OrderDetailDto orderDetailDto = toOrderDetailDto(productOrderDetail);
+            orderDetailDto.setProductId(productOrderDetail.getProductId());
+            orderDetailDtos.add(orderDetailDto);
+        }
+        return orderDetailDtos;
+    }
+
+    public List<ProductOrderDetail> toListOrderDetail(List<OrderDetailDto> orderDetailDtos)
+    {
+        List<ProductOrderDetail> orderDetailList = new ArrayList<>();
+        for(OrderDetailDto orderDetailDto : orderDetailDtos)
+        {
+            orderDetailList.add(toproductOrderDetail(orderDetailDto));
+        }
+        return orderDetailList;
+    }
+
+    public OrderDto toOrderDto(ProductOrder productOrder){
+        OrderDto orderDto = new OrderDto();
+        orderDto.setProductOrders(toListOrderDetailDto(productOrder.getOrderDetails()));
+        orderDto.setCreatedTime(productOrder.getCreatedAt());
+        orderDto.setDeliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_county(), productOrder.getAddress_city(), productOrder.getAddress_street_address()));
+        return orderDto;
+    }
+
+    public ProductOrder toProductOrder(OrderDto orderDto)
+    {
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setOrderDetails(toListOrderDetail(orderDto.getProductOrders()));
+        productOrder.setCreatedAt(orderDto.getCreatedTime());
+        productOrder.setAddress_country(orderDto.getDeliveryAddress().getAddressCountry());
+        productOrder.setAddress_county(orderDto.getDeliveryAddress().getAddressCounty());
+        productOrder.setAddress_city(orderDto.getDeliveryAddress().getAddressCity());
+        productOrder.setAddress_street_address(orderDto.getDeliveryAddress().getAddressStreet());
+        return productOrder;
+    }
+
+
+
+    public AddressDto toAddressDto(String addressCountry,String addressCounty,String addressCity,String addressStreet)
+    {
+        return new AddressDto(addressCountry,addressCounty,addressCity,addressStreet);
     }
 
     public ProductCombinedDto toProductDto(Product product)

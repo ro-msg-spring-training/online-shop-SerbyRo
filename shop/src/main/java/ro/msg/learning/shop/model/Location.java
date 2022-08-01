@@ -24,7 +24,7 @@ public class Location {
     private String address_country;
     private String address_city;
     private String address_county;
-    private String address_streetAddress;
+    private String address_street_address;
 
     @OneToMany(mappedBy = "location")
     private List<ProductOrder> orders;

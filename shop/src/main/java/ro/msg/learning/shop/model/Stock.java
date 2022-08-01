@@ -25,12 +25,12 @@ public class Stock {
 
     @ManyToOne
     @MapsId("locationId")
-    //@JoinColumn(name = "location_id", insertable=false, updatable=false)
+
     private Location location;
 
     @ManyToOne
     @MapsId("productId")
-    //@JoinColumn(name = "product_id", insertable=false, updatable=false)
+
     private Product product;
 
     private Integer quantity;

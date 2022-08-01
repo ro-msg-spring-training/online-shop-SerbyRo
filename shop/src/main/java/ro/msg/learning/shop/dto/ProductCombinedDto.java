@@ -20,19 +20,5 @@ public class ProductCombinedDto {
     private SupplierDto supplier;
     private String imageUrl;
 
-//    public ProductCombinedDto(Product product){
-//        this.productId = product.getId();
-//        this.name = product.getName();
-//        this.description = product.getDescription();
-//        this.price = product.getPrice();
-//        this.weight = product.getWeight();
-//        if (product.getProductCategory() != null)
-//        {
-//            category = new ProductCategoryDto(product.getProductCategory());
-//        }
-//        else
-//        {
-//            category = null;
-//        }
-//    }
+
 }

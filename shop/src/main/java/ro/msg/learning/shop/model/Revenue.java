@@ -24,8 +24,8 @@ public class Revenue {
     @JoinColumn(name = "location_id")
     private Location location;
 
-    private LocalDate dateRevenue;
+    private LocalDate date_revenue;
 
-    private BigDecimal sum;
+    private BigDecimal suma;
 
 }

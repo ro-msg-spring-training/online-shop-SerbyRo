@@ -92,7 +92,7 @@ public class Mapper {
                 .addressCountry(location.getAddress_country())
                 .addressCounty(location.getAddress_county())
                 .addressCity(location.getAddress_city())
-                .addressStreet(location.getAddress_streetAddress()).build();
+                .addressStreet(location.getAddress_street_address()).build();
     }
 
 
@@ -104,7 +104,7 @@ public class Mapper {
                 .address_country(locationDto.getAddressCountry())
                 .address_county(locationDto.getAddressCounty())
                 .address_city(locationDto.getAddressCity())
-                .address_streetAddress(locationDto.getAddressStreet()).build();
+                .address_street_address(locationDto.getAddressStreet()).build();
         newLocation.setId(locationDto.getLocationId());
         return newLocation;
     }
@@ -113,7 +113,7 @@ public class Mapper {
     {
         OrderDetailDto orderDetailDto = new OrderDetailDto();
         orderDetailDto.setProductId(productOrderDetail.getProduct().getId());
-        orderDetailDto.setQuantity(orderDetailDto.getQuantity());
+        orderDetailDto.setQuantity(productOrderDetail.getQuantity());
         return orderDetailDto;
     }
 
@@ -152,7 +152,8 @@ public class Mapper {
 
     public OrderDto toOrderDto(ProductOrder productOrder){
         OrderDto orderDto = new OrderDto();
-        orderDto.setProductOrders(toListOrderDetailDto(productOrder.getOrderDetails()));
+        orderDto.setOrderId(productOrder.getId());
+        orderDto.setProductOrders(productOrder.getOrderDetails().stream().map(this::toOrderDetailDto).toList());
         orderDto.setCreatedTime(productOrder.getCreatedAt());
         orderDto.setDeliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_county(), productOrder.getAddress_city(), productOrder.getAddress_street_address()));
         return orderDto;

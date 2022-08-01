@@ -23,7 +23,6 @@ public class ProductController {
         this.productService=productService;
     }
      @GetMapping("/suppliers")
-    @ResponseBody
     public List<SupplierDto> getAllSupliers(){
         return productService.getAllSuppliers();
      }
@@ -62,7 +61,6 @@ public class ProductController {
      }
 
     @GetMapping("/product_categories")
-    @ResponseBody
     public List<ProductCategoryDto> getAllProductCategories(){
         return productService.getAllProductCategories();
     }
@@ -103,7 +101,6 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    @ResponseBody
     public List<ProductCombinedDto> getAllProducts(){
         return productService.getAllProducts();
     }

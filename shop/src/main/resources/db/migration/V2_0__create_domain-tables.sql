@@ -35,7 +35,7 @@ create table if not exists location(
   address_country varchar(50) not null ,
   address_city varchar(50) not null ,
   address_county varchar(50) not null ,
-  address_streetAddress varchar(50) not null
+  address_street_address varchar(50) not null
 );
 
 create table if not exists stock(
@@ -66,6 +66,6 @@ create table if not exists product_order_detail(
 create table if not exists revenue(
     id int not null ,
     location_id int not null references location(id),
-    datarevenue date not null ,
+    date_revenue date not null ,
     suma numeric not null
 );

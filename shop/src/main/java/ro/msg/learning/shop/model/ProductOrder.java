@@ -23,7 +23,7 @@ public class ProductOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -31,7 +31,7 @@ public class ProductOrder {
     private LocalDate createdAt;
 
     @ManyToOne
-    @JoinColumn(name="shippedFrom_id")
+    @JoinColumn(name="shipped_from_id")
     private Location location;
 
     @OneToMany(mappedBy = "order")

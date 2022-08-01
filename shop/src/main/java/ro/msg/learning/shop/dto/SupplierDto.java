@@ -13,9 +13,4 @@ public class SupplierDto {
     private Long supplierId;
     private String name;
 
-//    public SupplierDto(Supplier supplier)
-//    {
-//        this.supplierId = supplier.getId();
-//        this.name = supplier.getName();
-//    }
 }

@@ -17,4 +17,6 @@ public interface IStockInterfaceRepository extends JpaRepository<Stock,Long> {
     Stock findByProductAndLocation(Product product, Location location);
 
     List<Stock> findByLocationId(Long locationId);
+
+    List<Stock> findByProductId(Long productId);
 }

@@ -54,4 +54,10 @@ public class StockService {
     public  void deleteAllStocks(){
         stockInterfaceRepository.deleteAll();
     }
+
+    public void updateStock(Stock stockToUpdate, Integer quantityTaken){
+        Integer newQuantity = stockToUpdate.getQuantity()-quantityTaken;
+        stockToUpdate.setQuantity(newQuantity);
+        stockInterfaceRepository.save(stockToUpdate);
+    }
 }

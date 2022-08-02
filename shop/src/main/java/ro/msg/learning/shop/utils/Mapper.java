@@ -109,12 +109,12 @@ public class Mapper {
         return newLocation;
     }
 
-    public OrderDetailDto toOrderDetailDto(ProductOrderDetail productOrderDetail)
+    public OrderDetailDto toOrderDetailDto(OrderDetail orderDetail)
     {
-        OrderDetailDto orderDetailDto = new OrderDetailDto();
-        orderDetailDto.setProductId(productOrderDetail.getProduct().getId());
-        orderDetailDto.setQuantity(productOrderDetail.getQuantity());
-        return orderDetailDto;
+        return OrderDetailDto.builder()
+                .productId(orderDetail.getProductId())
+                .quantity(orderDetail.getQuantity())
+                .build();
     }
 
     public ProductOrderDetail toproductOrderDetail(OrderDetailDto orderDetailDto)
@@ -128,17 +128,17 @@ public class Mapper {
         return productOrderDetail;
     }
 
-    public List<OrderDetailDto> toListOrderDetailDto(List<ProductOrderDetail> orderDetailList)
-    {
-        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
-        for (ProductOrderDetail productOrderDetail:orderDetailList)
-        {
-            OrderDetailDto orderDetailDto = toOrderDetailDto(productOrderDetail);
-            orderDetailDto.setProductId(productOrderDetail.getProductId());
-            orderDetailDtos.add(orderDetailDto);
-        }
-        return orderDetailDtos;
-    }
+//    public List<OrderDetailDto> toListOrderDetailDto(List<ProductOrderDetail> orderDetailList)
+//    {
+//        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
+//        for (ProductOrderDetail productOrderDetail:orderDetailList)
+//        {
+//            OrderDetailDto orderDetailDto = toOrderDetailDto(productOrderDetail);
+//            orderDetailDto.setProductId(productOrderDetail.getProductId());
+//            orderDetailDtos.add(orderDetailDto);
+//        }
+//        return orderDetailDtos;
+//    }
 
     public List<ProductOrderDetail> toListOrderDetail(List<OrderDetailDto> orderDetailDtos)
     {
@@ -150,28 +150,38 @@ public class Mapper {
         return orderDetailList;
     }
 
-    public OrderDto toOrderDto(ProductOrder productOrder){
-        OrderDto orderDto = new OrderDto();
-        orderDto.setOrderId(productOrder.getId());
-        orderDto.setProductOrders(productOrder.getOrderDetails().stream().map(this::toOrderDetailDto).toList());
-        orderDto.setCreatedTime(productOrder.getCreatedAt());
-        orderDto.setDeliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_county(), productOrder.getAddress_city(), productOrder.getAddress_street_address()));
-        return orderDto;
-    }
+//    public OrderDto toOrderDto(ProductOrder productOrder){
+//        OrderDto orderDto = new OrderDto();
+//        orderDto.setOrderId(productOrder.getId());
+//        orderDto.setCustomerID(productOrder.getCustomer().getId());
+//        orderDto.setShipped_from_id(productOrder.getLocation().getId());
+//        orderDto.setProductOrders(productOrder.getOrderDetails().stream().map(this::toOrderDetailDto).toList());
+//        orderDto.setCreatedTime(productOrder.getCreatedAt());
+//        orderDto.setDeliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_county(), productOrder.getAddress_city(), productOrder.getAddress_street_address()));
+//        return orderDto;
+//    }
 
-    public ProductOrder toProductOrder(OrderDto orderDto)
+    public ProductOrder toProductOrder(CreateOrderDto createOrderDto)
     {
-        ProductOrder productOrder = new ProductOrder();
-        productOrder.setOrderDetails(toListOrderDetail(orderDto.getProductOrders()));
-        productOrder.setCreatedAt(orderDto.getCreatedTime());
-        productOrder.setAddress_country(orderDto.getDeliveryAddress().getAddressCountry());
-        productOrder.setAddress_county(orderDto.getDeliveryAddress().getAddressCounty());
-        productOrder.setAddress_city(orderDto.getDeliveryAddress().getAddressCity());
-        productOrder.setAddress_street_address(orderDto.getDeliveryAddress().getAddressStreet());
-        return productOrder;
+        return ProductOrder.builder()
+                .id(createOrderDto.getOrderId())
+                .createdAt(createOrderDto.getCreatedTime())
+                .address_country(createOrderDto.getDeliveryAddress().getAddressCountry())
+                .address_city(createOrderDto.getDeliveryAddress().getAddressCity())
+                .address_county(createOrderDto.getDeliveryAddress().getAddressCounty())
+                .address_street_address(createOrderDto.getDeliveryAddress().getAddressStreet())
+                .build();
     }
 
-
+    public OrderDto convertToProduct(ProductOrder productOrder)
+    {
+        return OrderDto.builder()
+                .orderId(productOrder.getId())
+                .shipped_from_id(productOrder.getLocation().getId())
+                .createdTime(productOrder.getCreatedAt())
+                .deliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_city(), productOrder.getAddress_county(), productOrder.getAddress_street_address()))
+                .build();
+    }
 
     public AddressDto toAddressDto(String addressCountry,String addressCounty,String addressCity,String addressStreet)
     {
@@ -205,5 +215,42 @@ public class Mapper {
                 .build();
         newProduct.setId(productCombinedDto.getProductId());
         return newProduct;
+    }
+
+    public ProductOrder convertFromDTO(CreateOrderDto createOrderDto) {
+        return ProductOrder.builder()
+                .id(createOrderDto.getOrderId())
+                .createdAt(createOrderDto.getCreatedTime())
+                .address_country(createOrderDto.getDeliveryAddress().getAddressCountry())
+                .address_city(createOrderDto.getDeliveryAddress().getAddressCity())
+                .address_county(createOrderDto.getDeliveryAddress().getAddressCounty())
+                .address_street_address(createOrderDto.getDeliveryAddress().getAddressStreet())
+                .build();
+
+    }
+
+    public ProductOrderDetail toOrderDetail(OrderDetailDto orderDetailDto)
+    {
+        return ProductOrderDetail.builder()
+                .productId(orderDetailDto.getProductId())
+                .quantity(orderDetailDto.getQuantity())
+                .build();
+    }
+
+    public OrderDto toOrderDto(ProductOrder productOrder) {
+        return OrderDto.builder()
+                .orderId(productOrder.getId())
+                .customerID(productOrder.getCustomer().getId())
+                .productOrders(productOrder.getOrderDetails().stream().map(this::toOrderDetailDtowithProductOrderDetail).toList())
+                .deliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_city(), productOrder.getAddress_county(), productOrder.getAddress_street_address()))
+                .createdTime(productOrder.getCreatedAt())
+                .build();
+    }
+    public OrderDetailDto toOrderDetailDtowithProductOrderDetail(ProductOrderDetail productOrderDetail)
+    {
+        return OrderDetailDto.builder()
+                .productId(productOrderDetail.getProductId())
+                .quantity(productOrderDetail.getQuantity())
+                .build();
     }
 }

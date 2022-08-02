@@ -1,10 +1,7 @@
 package ro.msg.learning.shop.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -15,12 +12,16 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @Table(name="product_order_detail")
+@EqualsAndHashCode(exclude = {"order", "product"})
+
 public class ProductOrderDetail {
     @Id
     @Column(name = "product_order_id")
     private Long orderId;
     @Id
     private Long productId;
+//    @EmbeddedId
+//    private OrderProductId id;
 
     @ManyToOne
     @MapsId("orderId")
@@ -32,4 +33,10 @@ public class ProductOrderDetail {
     private Product product;
 
     private Integer quantity;
+
+    public ProductOrderDetail(ProductOrder placeOrder, Product foundProduct, Integer quantity) {
+        this.order = placeOrder;
+        this.product=foundProduct;
+        this.quantity=quantity;
+    }
 }

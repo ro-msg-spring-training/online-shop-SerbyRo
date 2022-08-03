@@ -8,10 +8,6 @@ import ro.msg.learning.shop.model.Stock;
 
 import java.util.List;
 
-//@Repository
-//public interface LocationStrategy {
-//    public List<Stock> findBestLocation(ProductOrder order);
-//}
 
 @Repository
 public interface LocationStrategy {

@@ -94,7 +94,7 @@ public class OrderService {
 
 
 
-            //implement strategy location
+
             List<Stock> foundStocks = locationStrategy.findBestLocation(productIdAndQuantityList);
             Location location = locationInterfaceRepository.getById(foundStocks.get(0).getLocation().getId());
             placedOrder.setLocation(location);
@@ -105,9 +105,8 @@ public class OrderService {
             orderSaved.setOrderDetails(orderDetails);
             orderDetaiInterfaceRepository.saveAll(orderDetails);
 
-            //place order
+
             modifyStocks(foundStocks, productIdAndQuantityList);
-            //lacedOrder.getOrderDetails().stream().findFirst().get().setOrderId(prod);
             return productOrderInterfaceRepository.save(orderSaved);
         } else {
             throw new RuntimeException("Customer does not exist");

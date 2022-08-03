@@ -21,7 +21,6 @@ public class OrderController {
     private final OrderDetailMapper orderDetailMapper;
     private final OrderMapper orderMapper;
 
-    //private Mapper mapper=new Mapper();
 
     public OrderController(OrderService orderService, OrderDetailMapper orderDetailMapper, OrderMapper orderMapper)
     {

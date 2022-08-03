@@ -1,16 +1,12 @@
 package ro.msg.learning.shop.strategy;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import ro.msg.learning.shop.dto.OrderDetailDto;
-import ro.msg.learning.shop.model.ProductOrder;
+
 import ro.msg.learning.shop.model.ProductOrderDetail;
 import ro.msg.learning.shop.model.Stock;
-import ro.msg.learning.shop.repository.ICustomerInterfaceRepository;
-import ro.msg.learning.shop.repository.IProductInterfaceRepository;
+
 import ro.msg.learning.shop.repository.IStockInterfaceRepository;
 import ro.msg.learning.shop.repository.LocationStrategy;
-import ro.msg.learning.shop.service.StockService;
-import ro.msg.learning.shop.service.exceptions.ProductException;
+
 
 import java.util.*;
 import java.util.stream.Collectors;

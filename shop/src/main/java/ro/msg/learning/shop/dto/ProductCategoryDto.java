@@ -17,14 +17,5 @@ public class ProductCategoryDto {
     private String name;
     private String description;
 
-//    public ProductCategoryDto(ProductCategory productCategory)
-//    {
-//        this.categoryId = productCategory.getId();
-//        this.name = productCategory.getName();
-//        this.description= productCategory.getDescription();
-//    }
-//
-//    public ProductCategory toProductCategory(){
-//        return new ProductCategory(categoryId,name,description,new HashSet<>());
-//    }
+
 }

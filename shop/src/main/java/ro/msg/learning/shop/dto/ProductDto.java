@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//TODO refactor the name ProductDto
+
 public class ProductDto {
     private long id;
     private String name;

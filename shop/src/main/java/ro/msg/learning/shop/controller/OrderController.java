@@ -5,12 +5,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ro.msg.learning.shop.controller.mappers.OrderDetailMapper;
+import ro.msg.learning.shop.controller.mappers.OrderMapper;
 import ro.msg.learning.shop.dto.CreateOrderDto;
 import ro.msg.learning.shop.dto.OrderDto;
 import ro.msg.learning.shop.model.ProductOrder;
-import ro.msg.learning.shop.repository.IProductOrderInterfaceRepository;
 import ro.msg.learning.shop.service.OrderService;
-import ro.msg.learning.shop.utils.Mapper;
 
 import java.util.stream.Collectors;
 
@@ -18,27 +18,31 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
+    private final OrderDetailMapper orderDetailMapper;
+    private final OrderMapper orderMapper;
 
-    private Mapper mapper=new Mapper();
+    //private Mapper mapper=new Mapper();
 
-    public OrderController(OrderService orderService)
+    public OrderController(OrderService orderService, OrderDetailMapper orderDetailMapper, OrderMapper orderMapper)
     {
         this.orderService = orderService;
+        this.orderDetailMapper = orderDetailMapper;
+        this.orderMapper = orderMapper;
     }
 
 //    @PostMapping("/orders")
-//    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto)
+//    public ResponseEntity<OrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)
 //    {
-//        ProductOrder ordertoAdd = orderService.createOrder(mapper.toProductOrder(orderDto));
-//        OrderDto order = mapper.toOrderDto(ordertoAdd);
-//        return new ResponseEntity<>(order, HttpStatus.OK);
+//        ProductOrder productOrder = orderService.placeOrder(mapper.convertFromDTO(createOrderDto),
+//                createOrderDto.getCustomerID(),
+//                createOrderDto.getProductOrders().stream().map(mapper::toOrderDetail).collect(Collectors.toList()));
+//        return new ResponseEntity<>(mapper.toOrderDto(productOrder),HttpStatus.CREATED);
 //    }
     @PostMapping("/orders")
-    public ResponseEntity<OrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)
+    public ResponseEntity<CreateOrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)
     {
-        ProductOrder productOrder = orderService.placeOrder(mapper.convertFromDTO(createOrderDto),
-                createOrderDto.getCustomerID(),
-                createOrderDto.getProductOrders().stream().map(mapper::toOrderDetail).collect(Collectors.toList()));
-        return new ResponseEntity<>(mapper.toOrderDto(productOrder),HttpStatus.CREATED);
+        ProductOrder productOrder = orderService.placeOrder(orderMapper.toOrderEntity(createOrderDto), createOrderDto.getCustomerID(),
+                createOrderDto.getProductOrders().stream().map(orderDetailMapper::toProductOrderDetailEntity).collect(Collectors.toList()));
+        return new ResponseEntity<>(orderMapper.toOrderDto(productOrder), HttpStatus.CREATED);
     }
 }

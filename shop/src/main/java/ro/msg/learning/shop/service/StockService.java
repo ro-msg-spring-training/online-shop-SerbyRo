@@ -9,6 +9,7 @@ import ro.msg.learning.shop.model.Product;
 import ro.msg.learning.shop.model.Stock;
 import ro.msg.learning.shop.repository.ILocationInterfaceRepository;
 import ro.msg.learning.shop.repository.IStockInterfaceRepository;
+import ro.msg.learning.shop.service.exceptions.NotFoundException;
 import ro.msg.learning.shop.service.exceptions.ProductException;
 import ro.msg.learning.shop.utils.Mapper;
 
@@ -31,33 +32,55 @@ public class StockService {
         this.locationInterfaceRepository = locationInterfaceRepository;
     }
 
-    public List<Stock> exportsStocks(Long locationId)
+//    public List<Stock> exportsStocks(Long locationId)
+//    {
+//        List<Stock> stockList;
+//        Optional<Location> location = locationInterfaceRepository.findById(locationId);
+//        if (location.isPresent())
+//        {
+//            stockList = stockInterfaceRepository.findByLocationId(locationId);
+//            return stockList;
+//        }
+//        else
+//        {
+//            throw new RuntimeException("We can't find the location with id " + locationId);
+//        }
+//    }
+//
+//    public void createStock(Stock stock)
+//    {
+//        stockInterfaceRepository.save(stock);
+//    }
+//
+//    public  void deleteAllStocks(){
+//        stockInterfaceRepository.deleteAll();
+//    }
+//
+//    public void updateStock(Stock stockToUpdate, Integer quantityTaken){
+//        Integer newQuantity = stockToUpdate.getQuantity()-quantityTaken;
+//        stockToUpdate.setQuantity(newQuantity);
+//        stockInterfaceRepository.save(stockToUpdate);
+//    }
+    public void updateStock(Stock stock)
     {
-        List<Stock> stockList;
-        Optional<Location> location = locationInterfaceRepository.findById(locationId);
-        if (location.isPresent())
+        if (stockInterfaceRepository.existsById(stock.getLocationId())&&
+                stockInterfaceRepository.existsById(stock.getProductId()))
         {
-            stockList = stockInterfaceRepository.findByLocationId(locationId);
-            return stockList;
-        }
-        else
+            stockInterfaceRepository.save(stock);
+        }else
         {
-            throw new RuntimeException("We can't find the location with id " + locationId);
+            throw new NotFoundException("Stock not found!");
         }
+
     }
 
-    public void createStock(Stock stock)
+    public List<Stock> getAllStocksByProductId(Long productId)
     {
-        stockInterfaceRepository.save(stock);
+        return stockInterfaceRepository.findByProductId(productId);
     }
 
-    public  void deleteAllStocks(){
-        stockInterfaceRepository.deleteAll();
-    }
-
-    public void updateStock(Stock stockToUpdate, Integer quantityTaken){
-        Integer newQuantity = stockToUpdate.getQuantity()-quantityTaken;
-        stockToUpdate.setQuantity(newQuantity);
-        stockInterfaceRepository.save(stockToUpdate);
+    public List<Stock> getAllStocksByLocationId(Long locationId)
+    {
+        return stockInterfaceRepository.findByLocationId(locationId);
     }
 }

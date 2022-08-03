@@ -13,7 +13,5 @@ import ro.msg.learning.shop.model.Product;
 @Builder
 public class OrderDetailDto {
     private Long productId;
-
-    private Product product;
     private Integer quantity;
 }

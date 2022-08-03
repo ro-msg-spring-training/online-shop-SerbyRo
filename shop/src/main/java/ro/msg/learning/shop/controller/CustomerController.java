@@ -20,44 +20,44 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping("/customers")
-    @ResponseBody
-    public List<CustomerDto> getAllCustomers(){
-        return customerService.getAllCustomers();
-    }
-
-    @GetMapping("/customers/{customerId}")
-    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable Long customerId)
-    {
-        try{
-            CustomerDto customerDto = customerService.findCustomerById(customerId);
-            return ResponseEntity.status(HttpStatus.OK).body(customerDto);
-        }catch (ProductException ex)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-    }
-
-    @PostMapping("/customers")
-    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto, HttpServletResponse response)
-    {
-        return customerService.addCustomer(customerDto);
-    }
-
-    @PutMapping("/customers/{customerId}")
-    public void updateSupplier(@PathVariable Long customerId,@RequestBody CustomerDto customerDto) throws ProductException {
-        customerService.updateCustomer(customerId,customerDto);
-    }
-
-    @DeleteMapping("/customers/{customerId}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable Long customerId)
-    {
-        try{
-            customerService.deleteCustomerById(customerId);
-            return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully!");
-        }catch (ProductException ex)
-        {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-        }
-    }
+//    @GetMapping("/customers")
+//    @ResponseBody
+//    public List<CustomerDto> getAllCustomers(){
+//        return customerService.getAllCustomers();
+//    }
+//
+//    @GetMapping("/customers/{customerId}")
+//    public ResponseEntity<CustomerDto> findCustomerById(@PathVariable Long customerId)
+//    {
+//        try{
+//            CustomerDto customerDto = customerService.findCustomerById(customerId);
+//            return ResponseEntity.status(HttpStatus.OK).body(customerDto);
+//        }catch (ProductException ex)
+//        {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+//        }
+//    }
+//
+//    @PostMapping("/customers")
+//    public CustomerDto addCustomer(@RequestBody CustomerDto customerDto, HttpServletResponse response)
+//    {
+//        return customerService.addCustomer(customerDto);
+//    }
+//
+//    @PutMapping("/customers/{customerId}")
+//    public void updateSupplier(@PathVariable Long customerId,@RequestBody CustomerDto customerDto) throws ProductException {
+//        customerService.updateCustomer(customerId,customerDto);
+//    }
+//
+//    @DeleteMapping("/customers/{customerId}")
+//    public ResponseEntity<String> deleteCustomer(@PathVariable Long customerId)
+//    {
+//        try{
+//            customerService.deleteCustomerById(customerId);
+//            return ResponseEntity.status(HttpStatus.OK).body("Customer deleted successfully!");
+//        }catch (ProductException ex)
+//        {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+//        }
+//    }
 }

@@ -11,6 +11,7 @@ import ro.msg.learning.shop.model.Supplier;
 import ro.msg.learning.shop.repository.IProductCategoryInterfaceRepository;
 import ro.msg.learning.shop.repository.IProductInterfaceRepository;
 import ro.msg.learning.shop.repository.ISupplierInterfaceRepository;
+import ro.msg.learning.shop.service.exceptions.NotFoundException;
 import ro.msg.learning.shop.service.exceptions.ProductException;
 import ro.msg.learning.shop.utils.Mapper;
 import ro.msg.learning.shop.utils.Status;
@@ -32,6 +33,8 @@ public class ProductService {
     private IProductCategoryInterfaceRepository productCategoryInterfaceRepository;
 
 
+
+
     private Mapper mapper = new Mapper();
 
     public ProductService(IProductInterfaceRepository productInterfaceRepository,ISupplierInterfaceRepository supplierInterfaceRepository,IProductCategoryInterfaceRepository productCategoryInterfaceRepository)
@@ -41,143 +44,247 @@ public class ProductService {
         this.supplierInterfaceRepository=supplierInterfaceRepository;
     }
 
-    public ProductCategoryDto addProductCategory(ProductCategoryDto productCategoryDto)
+//    public ProductCategoryDto addProductCategory(ProductCategoryDto productCategoryDto)
+//    {
+//        ProductCategory productCategory = mapper.toProductCategory(productCategoryDto);
+//        return mapper.toProductCategoryDto(productCategoryInterfaceRepository.save(productCategory));
+//    }
+//
+//    public ProductCategoryDto findProductCategoryById(Long categoryId) throws ProductException {
+//        Optional<ProductCategoryDto> productCategoryDto = productCategoryInterfaceRepository.findById(categoryId).map(mapper::toProductCategoryDto);
+//        if (productCategoryDto.isPresent())
+//        {
+//            return productCategoryDto.get();
+//        }
+//        else
+//        {
+//            throw new ProductException("The Product Category doesn't exist!");
+//        }
+//    }
+//    public List<ProductCategoryDto> getAllProductCategories(){
+//        return productCategoryInterfaceRepository.findAll()
+//                .stream()
+//                .map(mapper::toProductCategoryDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public void deleteProductCategoryById(Long categoryId) throws ProductException {
+//        if (productCategoryInterfaceRepository.existsById(categoryId)){
+//            productCategoryInterfaceRepository.deleteById(categoryId);
+//        }
+//        else
+//        {
+//            throw new ProductException("The Product doean't exist!");
+//        }
+//    }
+//
+//    public void updateProductCategory(Long categoryId,ProductCategoryDto productCategoryDto) throws ProductException{
+//        productCategoryInterfaceRepository.findById(categoryId)
+//                .orElseThrow(() ->new ProductException("Invalid categoryId"));
+//
+//        ProductCategory productCategory = mapper.toProductCategory(productCategoryDto);
+//        productCategory.setId(categoryId);
+//        productCategoryInterfaceRepository.save(productCategory);
+//    }
+
+    public ProductCategory saveProductCategory(ProductCategory productCategory)
     {
-        ProductCategory productCategory = mapper.toProductCategory(productCategoryDto);
-        return mapper.toProductCategoryDto(productCategoryInterfaceRepository.save(productCategory));
+        return productCategoryInterfaceRepository.save(productCategory);
     }
 
-    public ProductCategoryDto findProductCategoryById(Long categoryId) throws ProductException {
-        Optional<ProductCategoryDto> productCategoryDto = productCategoryInterfaceRepository.findById(categoryId).map(mapper::toProductCategoryDto);
-        if (productCategoryDto.isPresent())
+    public ProductCategory findProductCategoryById(Long categoryId)
+    {
+        if (productCategoryInterfaceRepository.existsById(categoryId))
         {
-            return productCategoryDto.get();
+            return productCategoryInterfaceRepository.getById(categoryId);
         }
-        else
-        {
-            throw new ProductException("The Product Category doesn't exist!");
+        else{
+            throw new NotFoundException("Category doesn't exist");
         }
-    }
-    public List<ProductCategoryDto> getAllProductCategories(){
-        return productCategoryInterfaceRepository.findAll()
-                .stream()
-                .map(mapper::toProductCategoryDto)
-                .collect(Collectors.toList());
     }
 
-    public void deleteProductCategoryById(Long categoryId) throws ProductException {
-        if (productCategoryInterfaceRepository.existsById(categoryId)){
+    public List<ProductCategory> getAllProductsCategories()
+    {
+        return productCategoryInterfaceRepository.findAll();
+    }
+
+    public void deleteProductCategoryById(Long categoryId)
+    {
+        if (productCategoryInterfaceRepository.existsById(categoryId))
+        {
             productCategoryInterfaceRepository.deleteById(categoryId);
         }
-        else
-        {
-            throw new ProductException("The Product doean't exist!");
-        }
     }
 
-    public void updateProductCategory(Long categoryId,ProductCategoryDto productCategoryDto) throws ProductException{
-        productCategoryInterfaceRepository.findById(categoryId)
-                .orElseThrow(() ->new ProductException("Invalid categoryId"));
+//    public SupplierDto addSupplier(SupplierDto supplierDto)
+//    {
+//        Supplier supplier = mapper.toSupplier(supplierDto);
+//        return mapper.toSupplierDto(supplierInterfaceRepository.save(supplier));
+//    }
+//
+//    public SupplierDto findSupplierById(Long supplierId) throws ProductException {
+//        Optional<SupplierDto> supplierDto = supplierInterfaceRepository.findById(supplierId).map(mapper::toSupplierDto);
+//        if (supplierDto.isPresent())
+//        {
+//            return  supplierDto.get();
+//        }
+//        else
+//        {
+//            throw new ProductException("The Product doesn't exist!");
+//        }
+//    }
+//    public List<SupplierDto> getAllSuppliers(){
+//        return supplierInterfaceRepository.findAll()
+//                .stream()
+//                .map(mapper::toSupplierDto)
+//                .collect(Collectors.toList());
+//    }
+//    public void deleteSupplierById(Long supplierId) throws ProductException {
+//        if (supplierInterfaceRepository.existsById(supplierId)){
+//            supplierInterfaceRepository.deleteById(supplierId);
+//        }
+//        else
+//        {
+//            throw new ProductException("The product doesn't exist!");
+//        }
+//    }
+//
+//    public void updateSupplier(Long supplierId, SupplierDto supplierDto) throws ProductException {
+//        supplierInterfaceRepository.findById(supplierId)
+//                .orElseThrow(() ->new ProductException("Invalid supplierId"));
+//
+//        Supplier supplier = mapper.toSupplier(supplierDto);
+//        supplier.setId(supplierId);
+//        supplierInterfaceRepository.save(supplier);
+//    }
 
-        ProductCategory productCategory = mapper.toProductCategory(productCategoryDto);
-        productCategory.setId(categoryId);
-        productCategoryInterfaceRepository.save(productCategory);
-    }
-
-    public SupplierDto addSupplier(SupplierDto supplierDto)
+    public Supplier saveSupplier(Supplier supplier)
     {
-        Supplier supplier = mapper.toSupplier(supplierDto);
-        return mapper.toSupplierDto(supplierInterfaceRepository.save(supplier));
+        return supplierInterfaceRepository.save(supplier);
     }
 
-    public SupplierDto findSupplierById(Long supplierId) throws ProductException {
-        Optional<SupplierDto> supplierDto = supplierInterfaceRepository.findById(supplierId).map(mapper::toSupplierDto);
-        if (supplierDto.isPresent())
-        {
-            return  supplierDto.get();
-        }
-        else
-        {
-            throw new ProductException("The Product doesn't exist!");
-        }
+    public Supplier findSupplierById(Long supplierId)
+    {
+        return supplierInterfaceRepository.getById(supplierId);
     }
-    public List<SupplierDto> getAllSuppliers(){
-        return supplierInterfaceRepository.findAll()
-                .stream()
-                .map(mapper::toSupplierDto)
-                .collect(Collectors.toList());
+
+    public List<Supplier> getAllSuppliers()
+    {
+        return supplierInterfaceRepository.findAll();
     }
-    public void deleteSupplierById(Long supplierId) throws ProductException {
-        if (supplierInterfaceRepository.existsById(supplierId)){
+
+    public void deleteSupplierById(Long supplierId)
+    {
+        if (supplierInterfaceRepository.existsById(supplierId))
+        {
             supplierInterfaceRepository.deleteById(supplierId);
         }
-        else
+    }
+
+//    public ProductCombinedDto addProduct(ProductCombinedDto productCombinedDto) throws ProductException {
+//        if (!productCategoryInterfaceRepository.existsById(productCombinedDto.getCategory().getCategoryId())){
+//            throw new ProductException("The category of this product doesn't exist!");
+//        }
+//        if(!supplierInterfaceRepository.existsById(productCombinedDto.getSupplier().getSupplierId())){
+//            throw new ProductException("The supplier for thisproduct doesn't exist!");
+//        }
+//        Product product = mapper.toProduct(productCombinedDto);
+//        return mapper.toProductDto(productInterfaceRepository.save(product));
+//    }
+//
+//    public ProductCombinedDto findProductById(Long productId) throws ProductException {
+//        Optional<ProductCombinedDto> productCombinedDto = productInterfaceRepository.findById(productId).map(mapper::toProductDto);
+//        if (productCombinedDto.isPresent())
+//        {
+//            return productCombinedDto.get();
+//        }
+//        else
+//        {
+//            throw new ProductException("The Product doesn't exist!");
+//        }
+//    }
+//    public List<ProductCombinedDto> getAllProducts() {
+//        return productInterfaceRepository.findAll().
+//                stream()
+//                .map(mapper::toProductDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public void deleteProductById(Long productId) throws ProductException {
+//        if (productInterfaceRepository.existsById(productId)) {
+//            productInterfaceRepository.deleteById(productId);
+//        }
+//        else
+//        {
+//            throw new ProductException("The Product doesn't exist!");
+//        }
+//    }
+//
+//    public void updateProduct(Long productId,ProductCombinedDto productCombinedDto) throws ProductException {
+//        productCategoryInterfaceRepository.findById(productCombinedDto.getCategory().getCategoryId())
+//                .orElseThrow(() ->new ProductException("Invalid categoryId"));
+//
+//        supplierInterfaceRepository.findById(productCombinedDto.getSupplier().getSupplierId())
+//                .orElseThrow(() ->new ProductException("Invalid supplierId"));
+//
+//        productInterfaceRepository.findById(productId)
+//                .orElseThrow(() ->new ProductException("Invalid productId"));
+//
+//        Product product = mapper.toProduct(productCombinedDto);
+//        product.setId(productId);
+//        productInterfaceRepository.save(product);
+//    }
+
+        public List<Product> getAllProducts()
         {
-            throw new ProductException("The product doesn't exist!");
+            return productInterfaceRepository.findAll();
         }
-    }
-
-    public void updateSupplier(Long supplierId, SupplierDto supplierDto) throws ProductException {
-        supplierInterfaceRepository.findById(supplierId)
-                .orElseThrow(() ->new ProductException("Invalid supplierId"));
-
-        Supplier supplier = mapper.toSupplier(supplierDto);
-        supplier.setId(supplierId);
-        supplierInterfaceRepository.save(supplier);
-    }
-
-    public ProductCombinedDto addProduct(ProductCombinedDto productCombinedDto) throws ProductException {
-        if (!productCategoryInterfaceRepository.existsById(productCombinedDto.getCategory().getCategoryId())){
-            throw new ProductException("The category of this product doesn't exist!");
-        }
-        if(!supplierInterfaceRepository.existsById(productCombinedDto.getSupplier().getSupplierId())){
-            throw new ProductException("The supplier for thisproduct doesn't exist!");
-        }
-        Product product = mapper.toProduct(productCombinedDto);
-        return mapper.toProductDto(productInterfaceRepository.save(product));
-    }
-
-    public ProductCombinedDto findProductById(Long productId) throws ProductException {
-        Optional<ProductCombinedDto> productCombinedDto = productInterfaceRepository.findById(productId).map(mapper::toProductDto);
-        if (productCombinedDto.isPresent())
+        public Product findProductById(Long productId)
         {
-            return productCombinedDto.get();
+            return productInterfaceRepository.getById(productId);
         }
-        else
+
+        public void addProduct(Product product,long productCategoryId, long supplierId)
         {
-            throw new ProductException("The Product doesn't exist!");
+            saveProduct(product,productCategoryId,supplierId);
         }
-    }
-    public List<ProductCombinedDto> getAllProducts() {
-        return productInterfaceRepository.findAll().
-                stream()
-                .map(mapper::toProductDto)
-                .collect(Collectors.toList());
-    }
 
-    public void deleteProductById(Long productId) throws ProductException {
-        if (productInterfaceRepository.existsById(productId)) {
-            productInterfaceRepository.deleteById(productId);
+        public void deleteProduct(Long productId){
+            if (productInterfaceRepository.existsById(productId))
+            {
+                productInterfaceRepository.deleteById(productId);
+            }
+            else
+            {
+                throw new NotFoundException("Product not found!");
+            }
         }
-        else
+
+        public void updateProduct(Product product,Long productCategoryId,Long supplierId,Long productId)
         {
-            throw new ProductException("The Product doesn't exist!");
+            System.out.println(productId);
+            System.out.println(productCategoryId);
+            if (productInterfaceRepository.existsById(productId)){
+                product.setId(productId);
+                saveProduct(product,productCategoryId,supplierId);
+            }else
+            {
+                throw new NotFoundException("Product not found!");
+            }
         }
-    }
-
-    public void updateProduct(Long productId,ProductCombinedDto productCombinedDto) throws ProductException {
-        productCategoryInterfaceRepository.findById(productCombinedDto.getCategory().getCategoryId())
-                .orElseThrow(() ->new ProductException("Invalid categoryId"));
-
-        supplierInterfaceRepository.findById(productCombinedDto.getSupplier().getSupplierId())
-                .orElseThrow(() ->new ProductException("Invalid supplierId"));
-
-        productInterfaceRepository.findById(productId)
-                .orElseThrow(() ->new ProductException("Invalid productId"));
-
-        Product product = mapper.toProduct(productCombinedDto);
-        product.setId(productId);
-        productInterfaceRepository.save(product);
-    }
+        public void saveProduct(Product product, long productCategoryId, long supplierId) {
+            if (productCategoryInterfaceRepository.existsById(productCategoryId)&&
+                    supplierInterfaceRepository.existsById(supplierId))
+            {
+                ProductCategory productCategory = this.findProductCategoryById(productCategoryId);
+                Supplier supplier = this.findSupplierById(supplierId);
+                product.setProductCategory(productCategory);
+                product.setSupplier(supplier);
+                productInterfaceRepository.save(product);
+            }else
+            {
+                throw new NotFoundException("Product category or supplier not found!");
+            }
+        }
 
 }

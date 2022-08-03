@@ -8,6 +8,7 @@ import ro.msg.learning.shop.dto.OrderDto;
 import ro.msg.learning.shop.dto.StockDto;
 import ro.msg.learning.shop.model.*;
 import ro.msg.learning.shop.repository.*;
+import ro.msg.learning.shop.service.exceptions.NotFoundException;
 import ro.msg.learning.shop.utils.Mapper;
 
 import javax.persistence.Entity;
@@ -90,8 +91,8 @@ public class OrderService {
     private Set<ProductOrderDetail> findProductsForOrderDetail(ProductOrder orderSave, List<ProductOrderDetail> productIdAndQuantityList) {
         Set<ProductOrderDetail> orderDetails = new HashSet<>();
         for (ProductOrderDetail productIdAndQuantity : productIdAndQuantityList) {
-            if(productInterfaceRepository.existsById(productIdAndQuantity.getProductId())) {
-                Product foundProduct = productInterfaceRepository.findById(productIdAndQuantity.getProductId()).get();
+            if(productInterfaceRepository.existsById(productIdAndQuantity.getProduct().getId())) {
+                Product foundProduct = productInterfaceRepository.findById(productIdAndQuantity.getProduct().getId()).get();
                 ProductOrderDetail orderDetail = new ProductOrderDetail(orderSave, foundProduct, productIdAndQuantity.getQuantity());
                 orderDetail.setOrderId(orderSave.getId());
                 orderDetail.setProductId(foundProduct.getId());
@@ -138,5 +139,19 @@ public class OrderService {
         } else {
             throw new RuntimeException("Customer does not exist");
         }
+//        if(customerInterfaceRepository.existsById(customerID)) {
+//            Customer customer = customerInterfaceRepository.getById(customerID);
+//            placedOrder.setCustomer(customer);
+//            Set<ProductOrderDetail> orderDetails = findProductsForOrderDetail(placedOrder, productIdAndQuantityList);
+//            placedOrder.setOrderDetails(orderDetails);
+//            List<Stock> foundStocks = locationStrategy.findBestLocation(productIdAndQuantityList);
+//            Location location = locationInterfaceRepository.getById(foundStocks.get(0).getLocation().getId());
+//            placedOrder.setLocation(location);
+//            modifyStocks(foundStocks, productIdAndQuantityList);
+//            productOrderInterfaceRepository.save(placedOrder);
+//            return placedOrder;
+//        } else {
+//            throw new NotFoundException("Customer does not exist");
+//        }
     }
 }

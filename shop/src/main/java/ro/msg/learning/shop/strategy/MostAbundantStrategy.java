@@ -14,48 +14,6 @@ import ro.msg.learning.shop.service.exceptions.ProductException;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
-//public class MostAbundantStrategy implements LocationStrategy {
-//    @Autowired
-//    private IStockInterfaceRepository stockInterfaceRepository;
-//
-//    @Autowired
-//    private StockService stockService;
-//
-//    @Override
-//    public List<Stock> findBestLocation(ProductOrder order) {
-//        List<Stock> stockLocation = new ArrayList<>();
-//        order.getOrderDetails().forEach(orderDetail -> {
-//           try {
-//                List<Stock> stocks = stockInterfaceRepository.findAllByQuantityAndProductId(orderDetail.getQuantity(), orderDetail.getProduct().getId());
-//                if (stocks.isEmpty()) {
-//                    try {
-//                        throw new ProductException("Nu exista produsul cu detaliile cu id-ul " + orderDetail.getProductId());
-//                    } catch (ProductException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-////                Stock stock = stocks.get(0);
-////                stockLocation.add(new Stock(stock.getLocation(), stock.getProduct(), stock.getQuantity()));
-//                Stock mostAbundant = stocks.stream().max(Comparator.comparing(Stock::getQuantity)).get();
-//                if (orderDetail.getQuantity() <= mostAbundant.getQuantity())
-//                {
-//                    stockLocation.add(mostAbundant);
-//                    stockService.updateStock(mostAbundant, orderDetail.getQuantity());
-////                    if (stockLocation.size() == order.getOrderDetails().size())
-////                        return stockLocation;
-//                }
-//            } catch (Exception ex) {
-//                throw new RuntimeException("The product with the id " + orderDetail.getProduct().getId() + " doesn't exist!");
-//            }
-//        });
-//        return stockLocation;
-//    }
-//
-//
-//
-//}
-
 public class MostAbundantStrategy implements LocationStrategy{
 
     private final IStockInterfaceRepository stockRepository;

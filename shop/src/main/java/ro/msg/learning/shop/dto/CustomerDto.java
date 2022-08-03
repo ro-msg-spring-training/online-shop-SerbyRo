@@ -17,13 +17,4 @@ public class CustomerDto {
     private String firstName;
     private String lastName;
     private String email;
-
-    public CustomerDto(Customer customer){
-        customerId = customer.getId();
-        firstName = customer.getFirstName();
-        lastName = customer.getLastName();
-        username = customer.getUsername();
-        password = customer.getPassword();
-        email = customer.getEmail();
-    }
 }

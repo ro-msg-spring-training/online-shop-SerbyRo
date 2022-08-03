@@ -7,6 +7,7 @@ import ro.msg.learning.shop.model.ProductOrder;
 import ro.msg.learning.shop.model.ProductOrderDetail;
 import ro.msg.learning.shop.model.Stock;
 import ro.msg.learning.shop.repository.*;
+import ro.msg.learning.shop.service.exceptions.LocationNotFound;
 import ro.msg.learning.shop.service.exceptions.ProductException;
 
 import java.util.*;
@@ -68,7 +69,7 @@ public class SingleLocationStrategy implements LocationStrategy{
     private boolean stockHasNeededProduct(Stock stock,
                                           List<ProductOrderDetail> productIdAndQuantityList ) {
 
-        List<ProductOrderDetail> found = productIdAndQuantityList.stream().filter(p -> stock.getProduct().getId() == p.getProductId() &&
+        List<ProductOrderDetail> found = productIdAndQuantityList.stream().filter(p -> stock.getProduct().getId() == p.getProduct().getId() &&
                 stock.getQuantity() > p.getQuantity()).collect(Collectors.toList());
         return !found.isEmpty();
     }
@@ -87,6 +88,6 @@ public class SingleLocationStrategy implements LocationStrategy{
                 return foundStocksForSingleLocation;
             }
         }
-        throw new RuntimeException("Unable to find products in stock");
+        throw new LocationNotFound("Unable to find products in stock");
     }
 }

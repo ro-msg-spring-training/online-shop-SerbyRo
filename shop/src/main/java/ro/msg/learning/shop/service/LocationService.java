@@ -27,47 +27,66 @@ public class LocationService {
         this.locationInterfaceRepository = locationInterfaceRepository;
     }
 
-    public LocationDto addLocation(LocationDto locationDto)
+//    public LocationDto addLocation(LocationDto locationDto)
+//    {
+//        Location location = mapper.toLocation(locationDto);
+//        return mapper.toLocationDto(locationInterfaceRepository.save(location));
+//    }
+//
+//    public LocationDto findLocationById(Long locationId) throws ProductException {
+//        Optional<LocationDto> locationDto = locationInterfaceRepository.findById(locationId).map(mapper::toLocationDto);
+//        if (locationDto.isPresent())
+//        {
+//            return locationDto.get();
+//        }
+//        else
+//        {
+//            throw new ProductException("The location doesn't exist!");
+//        }
+//    }
+//    public List<LocationDto> getAllLocations(){
+//        return locationInterfaceRepository.findAll()
+//                .stream()
+//                .map(mapper::toLocationDto)
+//                .collect(Collectors.toList());
+//    }
+//
+//    public void deleteLocationById(Long locationId) throws ProductException {
+//        if (locationInterfaceRepository.existsById(locationId)){
+//            locationInterfaceRepository.deleteById(locationId);
+//        }
+//        else
+//        {
+//            throw new ProductException("The Location doean't exist!");
+//        }
+//    }
+//
+//    public void updateLocation(Long locationId,LocationDto locationDto) throws ProductException{
+//        locationInterfaceRepository.findById(locationId)
+//                .orElseThrow(() ->new ProductException("Invalid locationId"));
+//
+//        Location location = mapper.toLocation(locationDto);
+//        location.setId(locationId);
+//        locationInterfaceRepository.save(location);
+//    }
+    public Location saveLocation(Location location)
     {
-        Location location = mapper.toLocation(locationDto);
-        return mapper.toLocationDto(locationInterfaceRepository.save(location));
+        return locationInterfaceRepository.save(location);
+    }
+    public Optional<Location> findLocationById(Long locationId){
+        return locationInterfaceRepository.findById(locationId);
     }
 
-    public LocationDto findLocationById(Long locationId) throws ProductException {
-        Optional<LocationDto> locationDto = locationInterfaceRepository.findById(locationId).map(mapper::toLocationDto);
-        if (locationDto.isPresent())
-        {
-            return locationDto.get();
-        }
-        else
-        {
-            throw new ProductException("The location doesn't exist!");
-        }
-    }
-    public List<LocationDto> getAllLocations(){
-        return locationInterfaceRepository.findAll()
-                .stream()
-                .map(mapper::toLocationDto)
-                .collect(Collectors.toList());
+    public List<Location> getAllLocations(){
+        return locationInterfaceRepository.findAll();
     }
 
-    public void deleteLocationById(Long locationId) throws ProductException {
-        if (locationInterfaceRepository.existsById(locationId)){
+    public void deleteLocationById(Long locationId)
+    {
+        if(locationInterfaceRepository.existsById(locationId))
+        {
             locationInterfaceRepository.deleteById(locationId);
         }
-        else
-        {
-            throw new ProductException("The Location doean't exist!");
-        }
-    }
-
-    public void updateLocation(Long locationId,LocationDto locationDto) throws ProductException{
-        locationInterfaceRepository.findById(locationId)
-                .orElseThrow(() ->new ProductException("Invalid locationId"));
-
-        Location location = mapper.toLocation(locationDto);
-        location.setId(locationId);
-        locationInterfaceRepository.save(location);
     }
 
 }

@@ -52,4 +52,8 @@ public class Product {
         this.productCategory = productCategory;
         this.supplier = supplier;
     }
+
+    public Product(Long productId) {
+        this.id = productId;
+    }
 }

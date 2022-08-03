@@ -1,10 +1,7 @@
 package ro.msg.learning.shop.controller.mappers;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ro.msg.learning.shop.dto.CreateProductDto;
+import ro.msg.learning.shop.dto.ProductDto;
 import ro.msg.learning.shop.dto.ProductCombinedDto;
 import ro.msg.learning.shop.model.Product;
 
@@ -47,7 +44,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public Product toProductfromCreatedDto(CreateProductDto createProductDto)
+    public Product toProductfromCreatedDto(ProductDto createProductDto)
     {
         return Product.builder()
                 .id(createProductDto.getId())

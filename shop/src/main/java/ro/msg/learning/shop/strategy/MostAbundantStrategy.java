@@ -26,7 +26,7 @@ public class MostAbundantStrategy implements LocationStrategy{
     public List<Stock> findBestLocation(List<ProductOrderDetail> productIdAndQuantityList) {
         List<Stock> stocks = new ArrayList<>();
         for(ProductOrderDetail productIdAndQuantity : productIdAndQuantityList) {
-            List<Stock> foundStocks = stockRepository.findByProductId(productIdAndQuantity.getProductId());
+            List<Stock> foundStocks = stockRepository.findByProductId(productIdAndQuantity.getProduct().getId());
             if(foundStocks.isEmpty()) {
                 throw new RuntimeException("Not found product in stock");
             }

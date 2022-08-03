@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 //TODO refactor the name ProductDto
-public class CreateProductDto {
+public class ProductDto {
     private long id;
     private String name;
     private String description;

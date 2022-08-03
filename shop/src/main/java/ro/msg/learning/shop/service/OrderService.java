@@ -80,7 +80,8 @@ public class OrderService {
         for(Stock stock : stocks) {
             Optional<ProductOrderDetail> foundProduct =
                     productIdAndQuantityList.stream()
-                            .filter(l-> l.getProductId() == stock.getProduct().getId()).findFirst();
+                            .filter(l-> Objects.equals(l.getProduct().getId(), stock.getProduct().getId())).findFirst();
+
             foundProduct.ifPresent(orderDetailProductIdAndQuantity -> stock.setQuantity(stock.getQuantity() - orderDetailProductIdAndQuantity.getQuantity()));
             stockInterfaceRepository.save(stock);
         }

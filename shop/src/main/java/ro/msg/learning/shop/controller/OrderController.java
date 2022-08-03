@@ -30,14 +30,6 @@ public class OrderController {
         this.orderMapper = orderMapper;
     }
 
-//    @PostMapping("/orders")
-//    public ResponseEntity<OrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)
-//    {
-//        ProductOrder productOrder = orderService.placeOrder(mapper.convertFromDTO(createOrderDto),
-//                createOrderDto.getCustomerID(),
-//                createOrderDto.getProductOrders().stream().map(mapper::toOrderDetail).collect(Collectors.toList()));
-//        return new ResponseEntity<>(mapper.toOrderDto(productOrder),HttpStatus.CREATED);
-//    }
     @PostMapping("/orders")
     public ResponseEntity<CreateOrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)
     {

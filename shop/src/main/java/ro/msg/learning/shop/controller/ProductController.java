@@ -8,9 +8,8 @@ import ro.msg.learning.shop.controller.mappers.ProductCategoryMapper;
 import ro.msg.learning.shop.controller.mappers.ProductMapper;
 
 import ro.msg.learning.shop.controller.mappers.SupplierMapper;
-import ro.msg.learning.shop.dto.CreateProductDto;
+import ro.msg.learning.shop.dto.ProductDto;
 import ro.msg.learning.shop.dto.ProductCombinedDto;
-import ro.msg.learning.shop.model.Product;
 import ro.msg.learning.shop.service.ProductService;
 
 import java.util.List;
@@ -160,7 +159,7 @@ public class ProductController {
      }
 
      @PostMapping("/products")
-    public ResponseEntity<Object> createProduct(@RequestBody CreateProductDto createProductDto)
+    public ResponseEntity<Object> createProduct(@RequestBody ProductDto createProductDto)
      {
          productService.addProduct(productMapper.toProductfromCreatedDto(createProductDto), createProductDto.getProductCategoryId(), createProductDto.getSupplierId());
          return new ResponseEntity<>("Product successfully created!",HttpStatus.CREATED);
@@ -173,7 +172,7 @@ public class ProductController {
          return new ResponseEntity<>("Product is deleted successfully",HttpStatus.OK);
      }
      @PutMapping("/products/{productId}")
-     public ResponseEntity<Object> updateProduct(@RequestBody CreateProductDto createProductDto,@PathVariable Long productId)
+     public ResponseEntity<Object> updateProduct(@RequestBody ProductDto createProductDto, @PathVariable Long productId)
      {
          productService.updateProduct(productMapper.toProductfromCreatedDto(createProductDto),
                  createProductDto.getProductCategoryId(), createProductDto.getSupplierId(),productId);

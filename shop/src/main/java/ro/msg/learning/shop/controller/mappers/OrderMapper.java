@@ -1,11 +1,8 @@
 package ro.msg.learning.shop.controller.mappers;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dto.AddressDto;
 import ro.msg.learning.shop.dto.CreateOrderDto;
-import ro.msg.learning.shop.dto.CreateProductDto;
 import ro.msg.learning.shop.model.ProductOrder;
 
 import java.util.stream.Collectors;

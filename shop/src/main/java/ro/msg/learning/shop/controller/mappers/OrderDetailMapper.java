@@ -12,11 +12,8 @@ import ro.msg.learning.shop.model.ProductOrderDetail;
 public class OrderDetailMapper {
     public ProductOrderDetail toProductOrderDetailEntity(OrderDetailDto orderDetailDto)
     {
-        Product product = Product.builder()
-                .id(orderDetailDto.getProductId())
-                .build();
         return ProductOrderDetail.builder()
-                .product(product)
+                .product(new Product(orderDetailDto.getProductId()))
                 .quantity(orderDetailDto.getQuantity())
                 .build();
     }

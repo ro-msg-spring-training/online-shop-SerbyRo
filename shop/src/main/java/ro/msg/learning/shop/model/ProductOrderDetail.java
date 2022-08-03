@@ -20,8 +20,6 @@ public class ProductOrderDetail {
     private Long orderId;
     @Id
     private Long productId;
-//    @EmbeddedId
-//    private OrderProductId id;
 
     @ManyToOne
     @MapsId("orderId")

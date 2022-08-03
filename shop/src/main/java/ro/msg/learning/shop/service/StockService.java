@@ -32,35 +32,6 @@ public class StockService {
         this.locationInterfaceRepository = locationInterfaceRepository;
     }
 
-//    public List<Stock> exportsStocks(Long locationId)
-//    {
-//        List<Stock> stockList;
-//        Optional<Location> location = locationInterfaceRepository.findById(locationId);
-//        if (location.isPresent())
-//        {
-//            stockList = stockInterfaceRepository.findByLocationId(locationId);
-//            return stockList;
-//        }
-//        else
-//        {
-//            throw new RuntimeException("We can't find the location with id " + locationId);
-//        }
-//    }
-//
-//    public void createStock(Stock stock)
-//    {
-//        stockInterfaceRepository.save(stock);
-//    }
-//
-//    public  void deleteAllStocks(){
-//        stockInterfaceRepository.deleteAll();
-//    }
-//
-//    public void updateStock(Stock stockToUpdate, Integer quantityTaken){
-//        Integer newQuantity = stockToUpdate.getQuantity()-quantityTaken;
-//        stockToUpdate.setQuantity(newQuantity);
-//        stockInterfaceRepository.save(stockToUpdate);
-//    }
     public void updateStock(Stock stock)
     {
         if (stockInterfaceRepository.existsById(stock.getLocationId())&&

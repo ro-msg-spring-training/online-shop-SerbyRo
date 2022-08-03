@@ -32,49 +32,6 @@ public class CustomerService {
     {
         this.customerInterfaceRepository=customerInterfaceRepository;
     }
-
-//    public CustomerDto addCustomer(CustomerDto customerDto)
-//    {
-//        Customer customer = mapper.toCustomer(customerDto);
-//        return mapper.toCustomerDto(customerInterfaceRepository.save(customer));
-//    }
-//
-//    public CustomerDto findCustomerById(Long customerId) throws ProductException {
-//        Optional<CustomerDto> customerDto = customerInterfaceRepository.findById(customerId).map(mapper::toCustomerDto);
-//        if (customerDto.isPresent())
-//        {
-//            return customerDto.get();
-//        }
-//        else
-//        {
-//            throw new ProductException("The customer doesn't exist!");
-//        }
-//    }
-//    public List<CustomerDto> getAllCustomers(){
-//        return customerInterfaceRepository.findAll()
-//                .stream()
-//                .map(mapper::toCustomerDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public void deleteCustomerById(Long customerId) throws ProductException {
-//        if (customerInterfaceRepository.existsById(customerId)){
-//            customerInterfaceRepository.deleteById(customerId);
-//        }
-//        else
-//        {
-//            throw new ProductException("The Product doean't exist!");
-//        }
-//    }
-//
-//    public void updateCustomer(Long customerId,CustomerDto customerDto) throws ProductException{
-//        customerInterfaceRepository.findById(customerId)
-//                .orElseThrow(() ->new ProductException("Invalid categoryId"));
-//
-//        Customer customer = mapper.toCustomer(customerDto);
-//        customer.setId(customerId);
-//        customerInterfaceRepository.save(customer);
-//    }
     public Customer saveCustomer(Customer customer)
     {
         return customerInterfaceRepository.save(customer);

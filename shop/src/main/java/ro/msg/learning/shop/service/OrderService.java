@@ -60,34 +60,6 @@ public class OrderService {
         this.locationInterfaceRepository=locationInterfaceRepository;
     }
 
-//    public ProductOrder createOrder(ProductOrder productOrder)
-//    {
-//        List<Stock> stockList = locationStrategy.findBestLocation(productOrder);
-//        try{
-//            productOrder.setLocation(stockList.get(0).getLocation());
-//            productOrder.setCreatedAt(LocalDate.now());
-//            productOrder.setCustomer(customerInterfaceRepository.findAll().get(0));
-//        }catch (IndexOutOfBoundsException ex)
-//        {
-//            throw new IndexOutOfBoundsException("We don't have any products in stock right now!");
-//        }
-//        productOrderInterfaceRepository.save(productOrder);
-//
-//        List<ProductOrderDetail> orderDetails = productOrder.getOrderDetails();
-//        stockList.forEach(stock->{
-//            for (ProductOrderDetail orderDetail: orderDetails){
-//                if (orderDetail.getOrderId() == (stock.getProduct().getId())){
-//                    int quantity = stock.getQuantity() - orderDetail.getQuantity();
-//                    Stock stockToUpdate = stockInterfaceRepository.findByProductAndLocation(stock.getProduct(),stock.getLocation());
-//                    stockToUpdate.setQuantity(quantity);
-//                    stockInterfaceRepository.save(stockToUpdate);
-//                    orderDetaiInterfaceRepository.save(orderDetail);
-//                }
-//            }
-//        });
-//        return productOrder;
-//    }
-
     private Set<ProductOrderDetail> findProductsForOrderDetail(ProductOrder orderSave, List<ProductOrderDetail> productIdAndQuantityList) {
         Set<ProductOrderDetail> orderDetails = new HashSet<>();
         for (ProductOrderDetail productIdAndQuantity : productIdAndQuantityList) {
@@ -139,19 +111,5 @@ public class OrderService {
         } else {
             throw new RuntimeException("Customer does not exist");
         }
-//        if(customerInterfaceRepository.existsById(customerID)) {
-//            Customer customer = customerInterfaceRepository.getById(customerID);
-//            placedOrder.setCustomer(customer);
-//            Set<ProductOrderDetail> orderDetails = findProductsForOrderDetail(placedOrder, productIdAndQuantityList);
-//            placedOrder.setOrderDetails(orderDetails);
-//            List<Stock> foundStocks = locationStrategy.findBestLocation(productIdAndQuantityList);
-//            Location location = locationInterfaceRepository.getById(foundStocks.get(0).getLocation().getId());
-//            placedOrder.setLocation(location);
-//            modifyStocks(foundStocks, productIdAndQuantityList);
-//            productOrderInterfaceRepository.save(placedOrder);
-//            return placedOrder;
-//        } else {
-//            throw new NotFoundException("Customer does not exist");
-//        }
     }
 }

@@ -128,17 +128,6 @@ public class Mapper {
         return productOrderDetail;
     }
 
-//    public List<OrderDetailDto> toListOrderDetailDto(List<ProductOrderDetail> orderDetailList)
-//    {
-//        List<OrderDetailDto> orderDetailDtos = new ArrayList<>();
-//        for (ProductOrderDetail productOrderDetail:orderDetailList)
-//        {
-//            OrderDetailDto orderDetailDto = toOrderDetailDto(productOrderDetail);
-//            orderDetailDto.setProductId(productOrderDetail.getProductId());
-//            orderDetailDtos.add(orderDetailDto);
-//        }
-//        return orderDetailDtos;
-//    }
 
     public List<ProductOrderDetail> toListOrderDetail(List<OrderDetailDto> orderDetailDtos)
     {
@@ -150,16 +139,6 @@ public class Mapper {
         return orderDetailList;
     }
 
-//    public OrderDto toOrderDto(ProductOrder productOrder){
-//        OrderDto orderDto = new OrderDto();
-//        orderDto.setOrderId(productOrder.getId());
-//        orderDto.setCustomerID(productOrder.getCustomer().getId());
-//        orderDto.setShipped_from_id(productOrder.getLocation().getId());
-//        orderDto.setProductOrders(productOrder.getOrderDetails().stream().map(this::toOrderDetailDto).toList());
-//        orderDto.setCreatedTime(productOrder.getCreatedAt());
-//        orderDto.setDeliveryAddress(new AddressDto(productOrder.getAddress_country(), productOrder.getAddress_county(), productOrder.getAddress_city(), productOrder.getAddress_street_address()));
-//        return orderDto;
-//    }
 
     public ProductOrder toProductOrder(CreateOrderDto createOrderDto)
     {

@@ -1,11 +1,13 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -16,7 +18,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @Table(name="product_category")
-public class ProductCategory {
+public class ProductCategory{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +27,8 @@ public class ProductCategory {
 
     private String description;
 
-    @OneToMany(mappedBy = "productCategory")
-    private Set<Product> products;
+   @OneToMany(mappedBy = "productCategory")
+   @JsonManagedReference
+   private Set<Product> products;
 
 }

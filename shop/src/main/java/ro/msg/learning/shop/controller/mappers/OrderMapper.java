@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.controller.mappers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dto.AddressDto;
 import ro.msg.learning.shop.dto.CreateOrderDto;
@@ -8,14 +9,11 @@ import ro.msg.learning.shop.model.ProductOrder;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class OrderMapper {
 
     private OrderDetailMapper orderDetailMapper;
 
-    public OrderMapper(OrderDetailMapper orderDetailMapper)
-    {
-        this.orderDetailMapper=orderDetailMapper;
-    }
 
     public ProductOrder toOrderEntity(CreateOrderDto createOrderDto)
     {

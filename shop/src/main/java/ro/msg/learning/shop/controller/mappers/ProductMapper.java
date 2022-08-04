@@ -1,20 +1,18 @@
 package ro.msg.learning.shop.controller.mappers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import ro.msg.learning.shop.dto.ProductDto;
 import ro.msg.learning.shop.dto.ProductCombinedDto;
 import ro.msg.learning.shop.model.Product;
 
 @Component
+@AllArgsConstructor
 public class ProductMapper {
     private ProductCategoryMapper productCategoryMapper;
     private SupplierMapper supplierMapper;
 
-    public ProductMapper(ProductCategoryMapper productCategoryMapper,SupplierMapper supplierMapper)
-    {
-        this.productCategoryMapper=productCategoryMapper;
-        this.supplierMapper = supplierMapper;
-    }
+
 
     public Product toProductEntity(ProductCombinedDto productCombinedDto)
     {
@@ -30,7 +28,7 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductCombinedDto toProductDto(Product product)
+    public ProductCombinedDto toProductCombinedDto(Product product)
     {
         return ProductCombinedDto.builder()
                 .productId(product.getId())
@@ -41,6 +39,20 @@ public class ProductMapper {
                 .imageUrl(product.getImageUrl())
                 .category(productCategoryMapper.toProductCategoryDto(product.getProductCategory()))
                 .supplier(supplierMapper.toSupplierDto(product.getSupplier()))
+                .build();
+    }
+
+    public ProductDto toProductDto(Product product)
+    {
+        return ProductDto.builder().
+                id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .weight(product.getWeight())
+                .imageUrl(product.getImageUrl())
+                .productCategoryId(product.getProductCategory().getId())
+                .supplierId(product.getSupplier().getId())
                 .build();
     }
 

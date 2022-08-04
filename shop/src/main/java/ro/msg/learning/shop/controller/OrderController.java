@@ -1,5 +1,6 @@
 package ro.msg.learning.shop.controller;
 
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import ro.msg.learning.shop.service.OrderService;
 import java.util.stream.Collectors;
 
 @RestController
+@AllArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
@@ -22,12 +24,6 @@ public class OrderController {
     private final OrderMapper orderMapper;
 
 
-    public OrderController(OrderService orderService, OrderDetailMapper orderDetailMapper, OrderMapper orderMapper)
-    {
-        this.orderService = orderService;
-        this.orderDetailMapper = orderDetailMapper;
-        this.orderMapper = orderMapper;
-    }
 
     @PostMapping("/orders")
     public ResponseEntity<CreateOrderDto> createOrder(@RequestBody CreateOrderDto createOrderDto)

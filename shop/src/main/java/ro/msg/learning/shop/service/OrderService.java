@@ -1,20 +1,10 @@
 package ro.msg.learning.shop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import ro.msg.learning.shop.dto.OrderDetailDto;
-import ro.msg.learning.shop.dto.OrderDto;
-import ro.msg.learning.shop.dto.StockDto;
 import ro.msg.learning.shop.model.*;
 import ro.msg.learning.shop.repository.*;
-import ro.msg.learning.shop.service.exceptions.NotFoundException;
-import ro.msg.learning.shop.utils.Mapper;
 
-import javax.persistence.Entity;
-import javax.persistence.criteria.Order;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -40,7 +30,6 @@ public class OrderService {
     @Autowired
     private ILocationInterfaceRepository locationInterfaceRepository;
 
-    private Mapper mapper = new Mapper();
 
 
     public OrderService(IProductOrderInterfaceRepository productOrderInterfaceRepository,

@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Builder
 public class ProductDto {
     private long id;
     private String name;

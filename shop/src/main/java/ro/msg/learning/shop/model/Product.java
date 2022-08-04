@@ -1,8 +1,10 @@
 package ro.msg.learning.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name="product")
 @EqualsAndHashCode(exclude = "productCategory")
-public class Product {
+public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -32,6 +34,7 @@ public class Product {
 
     @ManyToOne()
     @JoinColumn(name = "category_id")
+    @JsonBackReference
     private ProductCategory productCategory;
 
     @ManyToOne()

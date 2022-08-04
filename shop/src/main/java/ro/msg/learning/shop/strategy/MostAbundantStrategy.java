@@ -6,6 +6,7 @@ import ro.msg.learning.shop.model.Stock;
 
 import ro.msg.learning.shop.repository.IStockInterfaceRepository;
 import ro.msg.learning.shop.repository.LocationStrategy;
+import ro.msg.learning.shop.service.exceptions.LocationNotFound;
 
 
 import java.util.*;
@@ -24,7 +25,7 @@ public class MostAbundantStrategy implements LocationStrategy{
         for(ProductOrderDetail productIdAndQuantity : productIdAndQuantityList) {
             List<Stock> foundStocks = stockRepository.findByProductId(productIdAndQuantity.getProduct().getId());
             if(foundStocks.isEmpty()) {
-                throw new RuntimeException("Not found product in stock");
+                throw new LocationNotFound("Not found product in stock");
             }
             Optional<Stock> stock = foundStocks.stream()
                     .filter(s -> s.getQuantity() >= productIdAndQuantity.getQuantity())

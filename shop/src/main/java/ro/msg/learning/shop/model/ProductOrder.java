@@ -39,4 +39,20 @@ public class ProductOrder {
     private String address_city;
     private String address_county;
     private String address_street_address;
+
+    public ProductOrder(Long orderId)
+    {
+        this.id = orderId;
+    }
+    public ProductOrder(String address_country,
+     String address_city,
+     String address_county,
+     String address_street_address,
+                        Location location){
+        this.address_country=address_country;
+        this.address_county=address_county;
+        this.address_city=address_city;
+        this.address_street_address = address_street_address;
+        this.location = location;
+    }
 }

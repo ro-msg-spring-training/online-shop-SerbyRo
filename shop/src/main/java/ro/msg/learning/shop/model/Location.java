@@ -31,6 +31,14 @@ public class Location {
 
     @OneToMany(mappedBy = "location")
     private Set<Stock> stocks;
+
+    public Location(String name, String address_country, String address_city, String address_county, String address_street_address) {
+        this.name = name;
+        this.address_country = address_country;
+        this.address_city = address_city;
+        this.address_county = address_county;
+        this.address_street_address=address_street_address;
+    }
 }
 
 

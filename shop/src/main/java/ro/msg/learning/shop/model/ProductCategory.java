@@ -31,4 +31,10 @@ public class ProductCategory{
    @JsonManagedReference
    private Set<Product> products;
 
+   public ProductCategory(String name, String description)
+   {
+       this.name = name;
+       this.description = description;
+   }
+
 }

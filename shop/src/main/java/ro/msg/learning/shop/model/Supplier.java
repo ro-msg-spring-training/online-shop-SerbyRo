@@ -23,4 +23,10 @@ public class Supplier {
 
     @OneToMany(mappedBy = "supplier")
     private Set<Product> products;
+
+    public Supplier(String name)
+    {
+        this.name=name;
+    }
+
 }
